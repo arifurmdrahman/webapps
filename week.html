@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Week Timer - 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5rem;
+        }
+        .timer {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        .week {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Current Week Timer - 2025</h1>
+    <div class="week">Week #: <span id="weekNumber"></span></div>
+    <div class="timer">
+        <p>Time Remaining This Week:</p>
+        <p id="timer">Loading...</p>
+    </div>
+
+    <script>
+        function getWeekNumber(date) {
+            // Set the date to Thursday of the same week to follow ISO 8601 standard
+            const target = new Date(date);
+            target.setUTCDate(target.getUTCDate() + 4 - (target.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+            const weekNumber = Math.ceil(((target - yearStart) / 86400000 + 1) / 7);
+            return weekNumber;
+        }
+
+        function updateWeekAndTimer() {
+            const now = new Date();
+
+            // Display the current week number for 2025
+            const weekNumber = getWeekNumber(now);
+            document.getElementById('weekNumber').textContent = weekNumber;
+
+            // Calculate the time remaining in the current week
+            const weekEnd = new Date(now);
+            weekEnd.setUTCDate(weekEnd.getUTCDate() + (7 - (weekEnd.getUTCDay() || 7)));
+            weekEnd.setUTCHours(23, 59, 59, 999);
+            const timeRemaining = weekEnd - now;
+
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').textContent = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Update the week and timer every second
+        setInterval(updateWeekAndTimer, 1000);
+        updateWeekAndTimer();
+    </script>
+</body>
+</html>

@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h1>Countdown to 2025</h1>
+    <h1>2025</h1>
     <div id="countdown">
         <span id="days">0</span> <span class="label">Days</span> 
         <span id="hours">0</span> <span class="label">Hours</span> 
@@ -34,7 +34,7 @@
     <script>
         function updateCountdown() {
             // Set the target date and time (Jan 1, 2025, 00:00:00)
-            const targetDate = new Date("January 1, 2025 00:00:00").getTime();
+            const targetDate = new Date("December 31, 2025 23:59:59").getTime();
 
             // Get the current date and time
             const now = new Date().getTime();
@@ -57,7 +57,7 @@
             // If the countdown is over
             if (difference < 0) {
                 clearInterval(timer);
-                document.getElementById("countdown").textContent = "Happy New Year 2025!";
+                document.getElementById("countdown").textContent = "Happy New Year 2026!";
             }
         }
 
